@@ -37,4 +37,9 @@ class StuffService
     {
         return $this->stuffRepository->deleteStuff($id);
     }
+
+    public function trash()
+    {
+        return $this->stuffRepository->getTrashedStuff();
+    }
 }

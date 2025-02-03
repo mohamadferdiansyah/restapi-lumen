@@ -18,10 +18,17 @@ class StuffRepository {
     }
 
     public function updateStuff(array $data, $id){
-        return Stuff::where('id', $id)->update($data);
+        Stuff::where('id', $id)->update($data);
+        return Stuff::find($id);
     }
 
     public function deleteStuff($id){
-        return Stuff::where('id', $id)->delete();
+        $data = Stuff::where('id', $id)->first();
+        $data->delete();
+        return $data;
+    }
+
+    public function getTrashedStuff(){
+        return Stuff::onlyTrashed()->paginate(10);
     }
 }

@@ -26,12 +26,22 @@ class StuffController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        try {
+            $stuff = $this->stuffService->show($id);
+            return response()->json(new StuffResource($stuff), 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
     public function store(Request $request)
     {
         try {
             $payload = StuffRequest::validate($request);
             $stuff = $this->stuffService->store($payload);
-            return response()->json(new StuffResource($stuff), 201);
+            return response()->json(new StuffResource($stuff), 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
         }
@@ -43,6 +53,26 @@ class StuffController extends Controller
             $payload = StuffRequest::validate($request);
             $stuff = $this->stuffService->update($payload, $id);
             return response()->json(new StuffResource($stuff), 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $stuff = $this->stuffService->destroy($id);
+            return response()->json(new StuffResource($stuff), 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function trash()
+    {
+        try {
+            $stuffs = $this->stuffService->trash();
+            return response()->json(StuffResource::collection($stuffs), 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
         }

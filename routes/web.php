@@ -20,5 +20,13 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'stuffs'], function () use ($router){
     $router->get('/', 'StuffController@index');
     $router->post('/', 'StuffController@store');
+    $router->get('/trash', 'StuffController@trash');
+    $router->get('/{id}', 'StuffController@show');
     $router->patch('/{id}', 'StuffController@update');
+    $router->delete('/{id}', 'StuffController@destroy');
+});
+
+$router->group(['prefix' => 'users'], function () use ($router) {
+    $router->get('/', 'UserController@index');
+    $router->post('/', 'UserController@store');
 });
