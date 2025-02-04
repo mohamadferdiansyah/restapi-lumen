@@ -17,4 +17,5 @@ class StuffStockService
     {
         return $this->stuffStockRepository->update($data);
     }
+
 }

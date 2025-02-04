@@ -30,4 +30,9 @@ class InboundStuffService
         $store = $this->inboundStuffRepository->storeNewInboud($inboundStuff);
         return $store;
     }
+
+    public function delete($id)
+    {
+        return $this->inboundStuffRepository->delete($id);
+    }
 }

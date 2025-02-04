@@ -28,4 +28,14 @@ class InboundStuffController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $inboundStuff = $this->inboundStuffService->delete($id);
+            return response()->json(new InboundStuffResource($inboundStuff), 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
 }

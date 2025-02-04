@@ -40,6 +40,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     
     $router->group(['prefix' => 'inbound-stuffs'], function () use ($router) {
         $router->post('/', 'InboundStuffController@store');
+        $router->delete('/{id}', 'InboundStuffController@delete');
     });
 
     $router->get('/logout', 'UserController@logout');

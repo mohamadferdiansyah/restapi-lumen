@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\InboundStuff;
+use App\Models\StuffStock;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -36,4 +37,26 @@ class InboundStuffRepository
         return InboundStuff::create($data);
     }
 
+    public function delete($id)
+    {
+        $inboundStuff = InboundStuff::find($id);
+        $stuffStock = StuffStock::where('stuff_id', $inboundStuff->stuff_id)->first();
+
+        if ($inboundStuff->total > $stuffStock->total_avaliable) {
+            response()->json('Total stuff is not enough', 400)->send();
+            exit();
+        }
+
+        $stuffStock->total_avaliable -= $inboundStuff->total;
+        $stuffStock->save();
+
+        $imagePath = storage_path('app/public/images/' . basename($inboundStuff->proof_file));
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        $inboundStuff->delete();
+
+        return $inboundStuff;
+    }
 }
