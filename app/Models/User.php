@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable, HasFactory, HasUuids;
 
@@ -26,6 +27,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'role',
     ];
 
+    public const ADMIN = 'admin';
+    public const STAFF = 'staff';
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -38,5 +42,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
@@ -15,6 +16,29 @@ class UserController extends Controller
     {
         $this->userService = $userService;
     }
+
+    public function index()
+    {
+        $user = $this->userService->profile();
+        return response()->json(new UserResource($user), 200);
+    }
+
+    public function login(Request $request)
+    {
+        try {
+            $payload = LoginRequest::validate($request);
+            $login = $this->userService->login($payload);
+            return response()->json($login, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function logout(){
+        $this->userService->logout();
+        return response()->json("Logout berhasil", 200);
+    }
+
     public function store(Request $request)
     {
         try {

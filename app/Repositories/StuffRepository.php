@@ -31,4 +31,14 @@ class StuffRepository {
     public function getTrashedStuff(){
         return Stuff::onlyTrashed()->paginate(10);
     }
+
+    public function restoreStuff($id){
+        $stuff = Stuff::onlyTrashed()->where('id', $id)->restore();
+        return Stuff::find($id);
+    }
+
+    public function deteleStuffPermanent($id){
+        $stuff = Stuff::onlyTrashed()->where('id', $id)->forceDelete();
+        return NULL;
+    }
 }

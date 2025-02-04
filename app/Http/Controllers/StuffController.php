@@ -77,4 +77,22 @@ class StuffController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+
+    public function restore($id){
+        try {
+            $stuff = $this->stuffService->restore($id);
+            return response()->json(new StuffResource($stuff), 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function delete($id){
+        try {
+            $stuff = $this->stuffService->deletePermanent($id);
+            return response()->json('deleted', 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
 }

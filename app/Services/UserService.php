@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class UserService 
 {
@@ -36,5 +37,30 @@ class UserService
     public function destroy($id)
     {
         return $this->userRepository->deleteUser($id);
+    }
+
+    public function login(array $data)
+    {
+        $token = Auth::attempt($data);
+        if(!$token){
+            return response()->json("Login gagal, silahkan cek email dan password anda", 400)->send();
+            exit;
+        }
+        $responseToken = [
+            "access_token" => $token,
+            "token_type" => "Bearer",
+            "user" => Auth::user()
+        ];
+        return $responseToken;
+    }
+
+    public function profile()
+    {
+        return Auth::user();
+    }
+
+    public function logout()
+    {
+        return Auth::logout();
     }
 }

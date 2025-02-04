@@ -12,7 +12,7 @@ class UserRepository
     }
 
     public function getSpecificUser($id)
-    {
+    {       
         return User::find($id);
     }
 

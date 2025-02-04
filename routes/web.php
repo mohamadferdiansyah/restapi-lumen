@@ -17,16 +17,30 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'stuffs'], function () use ($router){
-    $router->get('/', 'StuffController@index');
-    $router->post('/', 'StuffController@store');
-    $router->get('/trash', 'StuffController@trash');
-    $router->get('/{id}', 'StuffController@show');
-    $router->patch('/{id}', 'StuffController@update');
-    $router->delete('/{id}', 'StuffController@destroy');
-});
+$router->post('/login', 'UserController@login');
+$router->post('/register', 'UserController@register');
 
-$router->group(['prefix' => 'users'], function () use ($router) {
-    $router->get('/', 'UserController@index');
-    $router->post('/', 'UserController@store');
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    
+    $router->group(['prefix' => 'stuffs'], function () use ($router) {
+        $router->get('/', 'StuffController@index');
+        $router->post('/', 'StuffController@store');
+        $router->get('/trash', 'StuffController@trash');
+        $router->get('/{id}', 'StuffController@show');
+        $router->patch('/{id}', 'StuffController@update');
+        $router->delete('/{id}', 'StuffController@destroy');
+        $router->get('/trash/restore/{id}', 'StuffController@restore');
+        $router->delete('/trash/delete/{id}', 'StuffController@delete');
+    });
+    
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get('/', 'UserController@index');
+        $router->post('/', 'UserController@store');
+    });
+
+    $router->group(['prefix' => 'me'], function () use ($router) {
+        $router->get('/', 'UserController@index');
+    });
+    
+    $router->get('/logout', 'UserController@logout');
 });

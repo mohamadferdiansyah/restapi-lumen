@@ -42,4 +42,12 @@ class StuffService
     {
         return $this->stuffRepository->getTrashedStuff();
     }
+
+    public function restore($id){
+        return $this->stuffRepository->restoreStuff($id);
+    }
+
+    public function deletePermanent($id){
+        return $this->stuffRepository->deteleStuffPermanent($id);
+    }
 }
