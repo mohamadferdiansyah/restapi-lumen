@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StuffStock extends Model
+class InboundStuff extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = [
         'stuff_id',
-        'total_avaliable',
-        'total_defec'
+        'total',
+        'date_time',
+        'proof_file'
     ];
 
     public function stuff()

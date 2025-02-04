@@ -34,13 +34,13 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     });
     
     $router->group(['prefix' => 'users'], function () use ($router) {
-        $router->get('/', 'UserController@index');
+        $router->get('/me', 'UserController@index');
         $router->post('/', 'UserController@store');
     });
-
-    $router->group(['prefix' => 'me'], function () use ($router) {
-        $router->get('/', 'UserController@index');
-    });
     
+    $router->group(['prefix' => 'inbound-stuffs'], function () use ($router) {
+        $router->post('/', 'InboundStuffController@store');
+    });
+
     $router->get('/logout', 'UserController@logout');
 });
