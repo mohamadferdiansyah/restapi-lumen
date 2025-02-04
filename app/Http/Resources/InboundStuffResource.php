@@ -8,6 +8,7 @@ class InboundStuffResource extends JsonResource
 {
     public function toArray($request)
     {
+        $this->stuff->makeHidden('stuffStock');
         return [
             'id' => $this->id,
             'stuff' => $this->stuff,
