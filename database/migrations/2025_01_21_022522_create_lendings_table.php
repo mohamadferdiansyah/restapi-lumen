@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('stuff_id');
             $table->dateTime('date_time');
             $table->string('name');
-            $table->text('note')->nullable();
+            $table->text('notes')->nullable();
             $table->integer('total_stuff');
             $table->softDeletes();
             $table->timestamps();

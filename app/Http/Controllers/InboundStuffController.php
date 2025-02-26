@@ -38,4 +38,5 @@ class InboundStuffController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+    
 }

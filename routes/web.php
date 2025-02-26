@@ -43,5 +43,9 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->delete('/{id}', 'InboundStuffController@delete');
     });
 
+    $router->group(['prefix' => 'lendings'], function () use ($router) {
+        $router->post('/', 'LendingController@store');
+    });
+
     $router->get('/logout', 'UserController@logout');
 });

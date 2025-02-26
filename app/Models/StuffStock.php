@@ -13,7 +13,7 @@ class StuffStock extends Model
 
     protected $fillable = [
         'stuff_id',
-        'total_avaliable',
+        'total_available',
         'total_defec'
     ];
 

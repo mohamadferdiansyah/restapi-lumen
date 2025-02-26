@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stuff_stocks', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('stuff_id');
-            $table->integer('total_avaliable');
+            $table->integer('total_available');
             $table->integer('total_defec');
             $table->softDeletes();
             $table->timestamps();

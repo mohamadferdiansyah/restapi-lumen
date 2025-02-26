@@ -31,4 +31,9 @@ class Stuff extends Model
     {
         return $this->hasOne(StuffStock::class);
     }
+
+    public function lending()
+    {
+        return $this->hasMany(Lending::class);
+    }
 }
